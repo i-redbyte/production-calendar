@@ -1,20 +1,21 @@
 package org.redbyte
 
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import org.redbyte.data.CalendarRepository
+import org.redbyte.domain.model.DisplayMode
 import org.redbyte.domain.usecase.GetProductionCalendarUseCase
+
 
 fun main() = runBlocking {
     val repository = CalendarRepository()
     val getCalendar = GetProductionCalendarUseCase(repository)
 
+    val mode = DisplayMode.PRETTY
+
     try {
-        val calendar = getCalendar(2025)
-        val json = Json { prettyPrint = true }.encodeToString(calendar)
-        println(json)
+        val output = getCalendar(2025, mode)
+        println(output)
     } catch (e: Exception) {
-        println("Ошибка: ${e.message}")
+        println("❌ Ошибка: ${e.message}")
     }
 }
