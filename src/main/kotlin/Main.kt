@@ -5,6 +5,7 @@ import org.redbyte.data.CalendarRepository
 import org.redbyte.domain.model.DisplayMode
 import org.redbyte.domain.usecase.GetProductionCalendarUseCase
 
+private const val CURRENT_YEAR = 2025
 
 fun main(args: Array<String>) = runBlocking {
     val repository = CalendarRepository()
@@ -16,8 +17,13 @@ fun main(args: Array<String>) = runBlocking {
     }
 
     try {
-        val output = getCalendar(2022, mode)
-        println(output)
+        val august2020 = getCalendar(2020, "август")
+        println(august2020)
+        val allYear = getCalendar(CURRENT_YEAR, mode)
+        println(allYear)
+        val currentMonth = getCalendar(2025)
+        println(currentMonth)
+
     } catch (e: Exception) {
         println("❌ Ошибка: ${e.message}")
     }
