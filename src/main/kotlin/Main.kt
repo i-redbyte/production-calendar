@@ -1,13 +1,12 @@
 package org.redbyte
 
-import kotlinx.coroutines.runBlocking
 import org.redbyte.data.CalendarRepository
 import org.redbyte.domain.model.DisplayMode
 import org.redbyte.domain.usecase.GetProductionCalendarUseCase
 
 private const val CURRENT_YEAR = 2025
 
-fun main(args: Array<String>) = runBlocking {
+fun main(args: Array<String>)  {
     val repository = CalendarRepository()
     val getCalendar = GetProductionCalendarUseCase(repository)
 
