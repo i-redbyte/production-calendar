@@ -2,13 +2,19 @@ package org.redbyte.data
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.redbyte.domain.model.CalendarFetchException
 import org.redbyte.domain.model.MonthData
 import org.redbyte.domain.model.ProductionCalendar
+import java.io.IOException
 
 class CalendarRepository {
     fun getProductionCalendar(year: Int): ProductionCalendar {
         val url = "$CALENDAR_URL$year"
-        val doc = Jsoup.connect(url).get()
+        val doc = try {
+            Jsoup.connect(url).get()
+        } catch (e: IOException) {
+            throw CalendarFetchException("Ошибка получения календаря: ${e.message}", e)
+        }
         return parseCalendar(doc, year)
     }
 
