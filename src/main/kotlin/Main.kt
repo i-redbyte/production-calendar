@@ -10,8 +10,6 @@ import org.redbyte.domain.usecase.FullCalendarHandler
 import org.redbyte.domain.usecase.GetProductionCalendarUseCase
 import org.redbyte.domain.usecase.NamedMonthHandler
 
-private const val CURRENT_YEAR = 2025
-
 fun main(args: Array<String>) {
     val repository = CalendarRepository()
     val jsonFormatter = JsonCalendarFormatter()
@@ -25,11 +23,11 @@ fun main(args: Array<String>) {
     }
 
     try {
-        val august2020 = getCalendar(2020, NamedMonthHandler("май", monthFormatter))
+        val august2020 = getCalendar(NamedMonthHandler("май", monthFormatter), 2020)
         println(august2020)
-        val allYear = getCalendar(CURRENT_YEAR, FullCalendarHandler(mode, jsonFormatter, prettyFormatter))
+        val allYear = getCalendar(FullCalendarHandler(mode, jsonFormatter, prettyFormatter))
         println(allYear)
-        val currentMonth = getCalendar(2025, CurrentMonthHandler(monthFormatter))
+        val currentMonth = getCalendar(CurrentMonthHandler(monthFormatter))
         println(currentMonth)
 
     } catch (e: Exception) {
