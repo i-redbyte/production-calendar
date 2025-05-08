@@ -1,7 +1,7 @@
 package org.redbyte.domain.model
 
 import kotlinx.serialization.Serializable
-import java.util.*
+import java.time.LocalDate
 
 @Serializable
 data class ProductionCalendar(
@@ -21,6 +21,6 @@ fun ProductionCalendar.filterByMonth(monthName: String): MonthData? {
 }
 
 fun ProductionCalendar.currentMonth(): MonthData? {
-    val currentMonthNumber = Calendar.getInstance().get(Calendar.MONTH)
-    return months[currentMonthNumber]
+    val monthIndex = LocalDate.now().monthValue - 1
+    return months.getOrNull(monthIndex)
 }

@@ -6,9 +6,17 @@ import org.redbyte.domain.model.CalendarFetchException
 import org.redbyte.domain.model.MonthData
 import org.redbyte.domain.model.ProductionCalendar
 import java.io.IOException
+import java.util.Calendar
+import java.util.concurrent.ConcurrentHashMap
 
 class CalendarRepository {
-    fun getProductionCalendar(year: Int): ProductionCalendar {
+    private val calendarCache = ConcurrentHashMap<Int, ProductionCalendar>()
+    private val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+
+    fun getProductionCalendar(year: Int = currentYear): ProductionCalendar = calendarCache
+        .computeIfAbsent(year) { fetchAndParseCalendar(it) }
+
+    private fun fetchAndParseCalendar(year: Int = currentYear): ProductionCalendar {
         val url = "$CALENDAR_URL$year"
         val doc = try {
             Jsoup.connect(url).get()
