@@ -1,4 +1,4 @@
-package org.redbyte.data
+package org.redbyte.data.repository
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
